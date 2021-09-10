@@ -1,5 +1,5 @@
-#ifndef clox_memory_h
-#define clox_memory_h
+#ifndef sby_memory_h
+#define sby_memory_h
 
 #include "common.h"
 
