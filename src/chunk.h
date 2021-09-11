@@ -6,11 +6,27 @@
 
 typedef enum {
     OP_CONSTANT,
+
+    // Types
+    OP_NIL,
+    OP_TRUE,
+    OP_FALSE,
+
+    // Comparisons
+    OP_EQUAL,
+    OP_GREATER,
+    OP_LESS,
+
+    // Operators
     OP_ADD,
     OP_SUBTRACT,
     OP_MULTIPLY,
     OP_DIVIDE,
+
+    // Unary
+    OP_NOT,
     OP_NEGATE,
+    
     OP_RETURN,
 } OpCode;
 
