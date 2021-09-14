@@ -1,0 +1,8 @@
+var a = "hi"
+var b = "world"
+
+a = "Hello"
+
+var c = a + " " + b
+
+print(c + "!")
