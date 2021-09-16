@@ -1,8 +1,10 @@
-var a = "hi"
-var b = "world"
+var a = 0
 
-a = "Hello"
+{
+    var b = 5
+    print(a)
+    print(b)
+}
 
-var c = a + " " + b
-
-print(c + "!")
+print(a)
+print(b) # Error
