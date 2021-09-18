@@ -1,5 +1,5 @@
 # Strawbry
-A bytecode programming language. 
+A modern dynamically typed programming language that gets compiled to bytecode and is run in a virtual machine called SVM (Strawbry Virtual Machine). 
 
 Here is what I want Strawbry to look like:
 ```js
@@ -15,5 +15,7 @@ func sqrt(x) {
 
 Change log:
 ```
+18/9: While loop
+17/9: If else statements
 16/9: Added scopes
 ```
