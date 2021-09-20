@@ -27,7 +27,7 @@ static Entry* findEntry(Entry* entries, int capacity, ObjString* key) {
         Entry* entry = &entries[index];
 
         if (entry->key == NULL) {
-            if (IS_NIL(entry->value)) { return tombstone != NULL ? tombstone : entry; }
+            if (IS_NULL(entry->value)) { return tombstone != NULL ? tombstone : entry; }
             else {
                 if (tombstone == NULL) tombstone = entry;
             }
@@ -51,7 +51,7 @@ static void adjustCapacity(Table* table, int capacity) {
     Entry* entries = ALLOCATE(Entry, capacity);
     for (int i = 0; i < capacity; i++) {
         entries[i].key = NULL;
-        entries[i].value = NIL_VAL;
+        entries[i].value = NULL_VAL;
     }
 
     table->count = 0;
@@ -80,7 +80,7 @@ bool tableSet(Table* table, ObjString* key, Value value) {
 
     Entry* entry = findEntry(table->entries, table->capacity, key);
     bool isNewKey = entry->key == NULL;
-    if (isNewKey && IS_NIL(entry->value)) table->count++;
+    if (isNewKey && IS_NULL(entry->value)) table->count++;
 
     entry->key = key;
     entry->value = value;
@@ -114,7 +114,7 @@ ObjString* tableFindString(Table* table, const char* chars, int length, uint32_t
     for (;;) {
         Entry* entry = &table->entries[index];
         if (entry->key == NULL) {
-            if (IS_NIL(entry->value)) return NULL;
+            if (IS_NULL(entry->value)) return NULL;
         } else if (entry->key->length == length && entry->key->hash == hash && memcmp(entry->key->chars, chars, length) == 0) {
             return entry->key;
         }

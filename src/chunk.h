@@ -7,11 +7,10 @@
 typedef enum {
     OP_CONSTANT,
     OP_POP,
-    OP_RETURN,
     OP_JUMP,
 
     // Types
-    OP_NIL,
+    OP_NULL,
     OP_TRUE,
     OP_FALSE,
     
@@ -42,6 +41,8 @@ typedef enum {
     OP_JUMP_IF_FALSE,
     
     // Functions
+    OP_RETURN,
+    OP_CALL,
     OP_PRINT,
 } OpCode;
 

@@ -15,6 +15,8 @@ func sqrt(x) {
 
 Change log:
 ```
+20/9: Functions
+19/9: For loop
 18/9: While loop
 17/9: If else statements
 16/9: Added scopes

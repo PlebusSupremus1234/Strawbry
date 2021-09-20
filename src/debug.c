@@ -46,7 +46,7 @@ int disassembleInstruction(Chunk* chunk, int offset) {
     uint8_t instruction = chunk->code[offset];
     switch (instruction) {
         case OP_CONSTANT: return constantInstruction("OP_CONSTANT", chunk, offset);
-        case OP_NIL: return simpleInstruction("OP_NIL", offset);
+        case OP_NULL: return simpleInstruction("OP_NULL", offset);
         case OP_TRUE: return simpleInstruction("OP_TRUE", offset);
         case OP_FALSE: return simpleInstruction("OP_FALSE", offset);
         case OP_POP: return simpleInstruction("OP_POP", offset);
@@ -68,6 +68,7 @@ int disassembleInstruction(Chunk* chunk, int offset) {
         case OP_JUMP: return jumpInstruction("OP_JUMP", 1, chunk, offset);
         case OP_JUMP_IF_FALSE: return jumpInstruction("OP_JUMP_IF_FALSE", 1, chunk, offset);
         case OP_LOOP: return jumpInstruction("OP_LOOP", -1, chunk, offset);
+        case OP_CALL: return byteInstruction("OP_CALL", chunk, offset);
         case OP_RETURN: return simpleInstruction("OP_RETURN", offset);
         default:
             printf("Unknown opcode %d\n", instruction);
