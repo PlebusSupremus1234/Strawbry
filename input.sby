@@ -1,8 +1,18 @@
-func fib(n) {
-    if (n < 2) return n
-    return fib(n - 2) + fib(n - 1)
+var globalSet
+var globalGet
+
+func main() {
+	var a = "initial"
+
+	func set() { a = "updated" }
+	func get() { print(a) }
+
+	globalSet = set
+	globalGet = get
 }
 
-var start = clock()
-print(fib(30))
-print(clock() - start)
+main()
+
+globalGet() # initial
+globalSet() # set to updated
+globalGet() # updated

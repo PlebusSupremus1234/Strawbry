@@ -15,6 +15,7 @@ func sqrt(x) {
 
 Change log:
 ```
+21/9: Closures & Garbage Collection
 20/9: Functions
 19/9: For loop
 18/9: While loop
