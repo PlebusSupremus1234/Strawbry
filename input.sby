@@ -1,18 +1,3 @@
-var globalSet
-var globalGet
+class Test {}
 
-func main() {
-	var a = "initial"
-
-	func set() { a = "updated" }
-	func get() { print(a) }
-
-	globalSet = set
-	globalGet = get
-}
-
-main()
-
-globalGet() # initial
-globalSet() # set to updated
-globalGet() # updated
+print(Test)
