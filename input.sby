@@ -1,3 +1,13 @@
-class Test {}
+class Rectangle {
+    func init(width, height) {
+        self.width = width
+        self.height = height
+    }
 
-print(Test)
+    func area() {
+        return self.width * self.height
+    }
+}
+
+var rectangle = Rectangle(20, 30)
+print(rectangle.area())

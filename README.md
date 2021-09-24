@@ -15,7 +15,9 @@ func sqrt(x) {
 
 Change log:
 ```
-21/9: Closures + Garbage Collection
+24/9: Class methods
+23/9: Classes
+21/9: Closures and garbage collection
 20/9: Functions
 19/9: For loop
 18/9: While loop
