@@ -1,5 +1,5 @@
 # Strawbry
-A modern dynamically typed programming language that gets compiled to bytecode and is run in a virtual machine called SVM (Strawbry Virtual Machine). 
+A dynamically typed programming language with features from the past (like OOP and Null) that gets compiled to bytecode and is run in a virtual machine called SVM (Strawbry Virtual Machine). 
 
 Here is what I want Strawbry to look like:
 ```js
