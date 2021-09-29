@@ -15,6 +15,8 @@ func sqrt(x) {
 
 Change log:
 ```
+29/9: Power operator
+28/9: Superclasses
 24/9: Class methods
 23/9: Classes
 21/9: Closures and garbage collection

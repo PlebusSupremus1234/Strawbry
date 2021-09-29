@@ -1,13 +1,22 @@
 class Rectangle {
-    func init(width, height) {
+    fn init(width, height) {
         self.width = width
         self.height = height
     }
 
-    func area() {
+    fn area() {
         return self.width * self.height
     }
 }
 
-var rectangle = Rectangle(20, 30)
-print(rectangle.area())
+class Square inherits Rectangle {
+    fn init(length) {
+        super.init(length, length)
+    }
+}
+
+var rect = Rectangle(100, 200)
+print(rect.area())
+
+var square = Square(100)
+print(square.area())

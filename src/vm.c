@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include <math.h>
 
 #include "common.h"
 #include "compiler.h"
@@ -391,6 +392,17 @@ static InterpretResult run() {
             case OP_SUBTRACT: BINARY_OP(NUMBER_VAL, -); break;
             case OP_MULTIPLY: BINARY_OP(NUMBER_VAL, *); break;
             case OP_DIVIDE: BINARY_OP(NUMBER_VAL, /); break;
+            case OP_POWER: {
+                if (IS_NUMBER(peek(0)) && IS_NUMBER(peek(1))) {
+                    double b = AS_NUMBER(pop());
+                    double a = AS_NUMBER(pop());
+                    push(NUMBER_VAL(pow(a, b)));
+                } else {
+                    runtimeError("Operands must be two numbers");
+                    return INTERPRET_RUNTIME_ERROR;
+                }
+                break;
+            }
             case OP_NOT: push(BOOL_VAL(isFalsey(pop()))); break;
             case OP_NEGATE: {
                 if (!IS_NUMBER(peek(0))) {
@@ -462,6 +474,26 @@ static InterpretResult run() {
             case OP_CLASS:
                 push(OBJ_VAL(newClass(READ_STRING())));
                 break;
+            case OP_INHERIT: {
+                Value superclass = peek(1);
+
+                if (!IS_CLASS(superclass)) {
+                    runtimeError("Superclass must be a class");
+                    return INTERPRET_RUNTIME_ERROR;
+                }
+
+                ObjClass* subclass = AS_CLASS(peek(0));
+                tableAddAll(&AS_CLASS(superclass)->methods, &subclass->methods);
+                pop();
+                break;
+            }
+            case OP_GET_SUPER: {
+                ObjString* name = READ_STRING();
+                ObjClass* superclass = AS_CLASS(pop());
+
+                if (!bindMethod(superclass, name)) return INTERPRET_RUNTIME_ERROR;
+                break;
+            }
             case OP_METHOD:
                 defineMethod(READ_STRING());
                 break;
@@ -470,6 +502,16 @@ static InterpretResult run() {
                 int argCount = READ_BYTE();
 
                 if (!invoke(method, argCount)) return INTERPRET_RUNTIME_ERROR;
+
+                frame = &vm.frames[vm.frameCount - 1];
+                break;
+            }
+            case OP_SUPER_INVOKE: {
+                ObjString* method = READ_STRING();
+                int argCount = READ_BYTE();
+                ObjClass* superclass = AS_CLASS(pop());
+             
+                if (!invokeFromClass(superclass, method, argCount)) return INTERPRET_RUNTIME_ERROR;
 
                 frame = &vm.frames[vm.frameCount - 1];
                 break;

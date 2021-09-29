@@ -73,8 +73,11 @@ static void skipWhitespace() {
                 scanner.line++;
                 advance();
                 break;
-            case '#':
-                while (peek() != '\n' && !isAtEnd()) advance();
+            case '/':
+                if (peekNext() == '/') {
+                    while (peek() != '\n' && !isAtEnd()) advance();
+                } else return;
+
                 break;
             default: return;
         }
@@ -99,11 +102,19 @@ static TokenType identifierType() {
                 switch (scanner.start[1]) {
                     case 'a': return checkKeyword(2, 3, "lse", TOKEN_FALSE);
                     case 'o': return checkKeyword(2, 1, "r", TOKEN_FOR);
-                    case 'u': return checkKeyword(2, 2, "nc", TOKEN_FUNC);
+                    case 'n': return checkKeyword(2, 0, "", TOKEN_FN);
                 }
             }
             break;
-        case 'i': return checkKeyword(1, 1, "f", TOKEN_IF);
+        case 'i':
+            if (scanner.current - scanner.start > 1) {
+                switch (scanner.start[1]) {
+                    case 'f': return checkKeyword(2, 0, "", TOKEN_IF);
+                    case 'n': return checkKeyword(2, 6, "herits", TOKEN_INHERITS);
+                }
+            }
+            break;
+            return checkKeyword(1, 1, "f", TOKEN_IF);
         case 'n': return checkKeyword(1, 3, "ull", TOKEN_NULL);
         case 'o': return checkKeyword(1, 1, "r", TOKEN_OR);
         case 'p': return checkKeyword(1, 4, "rint", TOKEN_PRINT);
@@ -165,17 +176,21 @@ Token scanToken() {
     if (isAlpha(c)) return identifier();
 
     switch (c) {
+        case '+': return makeToken(TOKEN_PLUS);
+        case '-': return makeToken(TOKEN_MINUS);
+        case '*': return makeToken(TOKEN_STAR);
+        case '/': return makeToken(TOKEN_SLASH);
+        case '^': return makeToken(TOKEN_CARET);
+
+        case ',': return makeToken(TOKEN_COMMA);
+        case '.': return makeToken(TOKEN_DOT);
+        case ';': return makeToken(TOKEN_SEMICOLON);
+
         case '(': return makeToken(TOKEN_LEFT_PAREN);
         case ')': return makeToken(TOKEN_RIGHT_PAREN);
         case '{': return makeToken(TOKEN_LEFT_BRACE);
         case '}': return makeToken(TOKEN_RIGHT_BRACE);
-        case ';': return makeToken(TOKEN_SEMICOLON);
-        case ',': return makeToken(TOKEN_COMMA);
-        case '.': return makeToken(TOKEN_DOT);
-        case '-': return makeToken(TOKEN_MINUS);
-        case '+': return makeToken(TOKEN_PLUS);
-        case '/': return makeToken(TOKEN_SLASH);
-        case '*': return makeToken(TOKEN_STAR);
+
         case '!': return makeToken(match('=') ? TOKEN_BANG_EQUAL : TOKEN_BANG);
         case '=': return makeToken(match('=') ? TOKEN_EQUAL_EQUAL : TOKEN_EQUAL);
         case '<': return makeToken(match('=') ? TOKEN_LESS_EQUAL : TOKEN_LESS);
